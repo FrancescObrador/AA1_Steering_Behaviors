@@ -42,6 +42,8 @@ public:
 	Vector2D getTarget();
 	Vector2D getVelocity();
 	float getMaxVelocity();
+	float getMaxForce();
+	float getSpeed();
 	void setBehavior(SteeringBehavior *behavior);
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
