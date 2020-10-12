@@ -6,13 +6,13 @@ class Flocking : public Pursue
 {
 private:
 	std::vector<Agent*>* flockingAgents;
-	float NEIGHBOR_RADIUS = 100;
+	float NEIGHBOR_RADIUS = 50;
 
-	float K_SEPARATION_FORCE = 200;
+	float K_SEPARATION_FORCE = 400;
 	float K_COHESION_FORCE = 50;
-	float K_ALIGNMENT_FORCE = 5;
+	float K_ALIGNMENT_FORCE = 1;
 
-	float K_MAX_FLOCKING_FORCE = 10;
+	float K_MAX_FLOCKING_FORCE = 100;
 
 public:
 	Flocking();

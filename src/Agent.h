@@ -53,6 +53,7 @@ public:
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
+	void setSpeed(float speed);
 	void setTargetAgent(Agent *agent);
 	void update(float dtime, SDL_Event *event);
 	void draw();

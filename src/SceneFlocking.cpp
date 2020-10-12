@@ -7,13 +7,14 @@ SceneFlocking::SceneFlocking()
 	flockingAgents = new std::vector<Agent*>();
 
 	Agent* agent;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		 agent = new Agent;
 		agent->setBehavior(new Flocking(flockingAgents));
 		agent->setTarget(Vector2D(100, 100));
 		agent->setPosition(Vector2D(20, 20 + i));
 		agent->loadSpriteTexture("../res/zombie1.png", 8);
+		agent->setSpeed(10);
 		agents.push_back(agent);
 		flockingAgents->push_back(agent);
 	}
@@ -51,13 +52,14 @@ void SceneFlocking::update(float dtime, SDL_Event* event)
 	case SDL_MOUSEBUTTONDOWN:
 		if (event->button.button == SDL_BUTTON_LEFT)
 		{
+			target = Vector2D((float)(event->button.x), (float)(event->button.y));
+			agents[agents.size()-1]->setTarget(target);
 		}
 		break;
 	default:
 		break;
 	}
-	target = agents[1]->getPosition();
-	agents[0]->setTarget(target);
+
 	for (int i = 0; i < (int)agents.size(); i++)
 	{
 		agents[i]->update(dtime, event);
@@ -67,6 +69,7 @@ void SceneFlocking::update(float dtime, SDL_Event* event)
 
 void SceneFlocking::draw()
 {
+	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 	for (int i = 0; i < (int)agents.size(); i++)
 	{
 		agents[i]->draw();
