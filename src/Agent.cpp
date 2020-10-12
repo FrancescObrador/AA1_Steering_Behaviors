@@ -4,7 +4,7 @@ using namespace std;
 
 Agent::Agent() : sprite_texture(0),
                  position(Vector2D(100, 100)),
-	             target(Vector2D(1000, 100)),
+	             targetPosition(Vector2D(1000, 100)),
 	             velocity(Vector2D(0,0)),
 				 mass(1),
 	             speed(0.5),
@@ -38,12 +38,17 @@ Vector2D Agent::getPosition()
 
 Vector2D Agent::getTarget()
 {
-	return target;
+	return targetPosition;
 }
 
 Vector2D Agent::getVelocity()
 {
 	return velocity;
+}
+
+Agent* Agent::getTargetAgent()
+{
+	return targetAgent;
 }
 
 float Agent::getMass()
@@ -73,12 +78,17 @@ void Agent::setPosition(Vector2D _position)
 
 void Agent::setTarget(Vector2D _target)
 {
-	target = _target;
+	targetPosition = _target;
 }
 
 void Agent::setVelocity(Vector2D _velocity)
 {
 	velocity = _velocity;
+}
+
+void Agent::setTargetAgent(Agent* _agent)
+{
+	targetAgent = _agent;
 }
 
 void Agent::update(float dtime, SDL_Event *event)

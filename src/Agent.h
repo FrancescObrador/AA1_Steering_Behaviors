@@ -22,7 +22,9 @@ private:
 	SteeringBehavior *steering_behaviour;
 	Vector2D position;
 	Vector2D velocity;
-	Vector2D target;
+	Vector2D targetPosition;	//TODO si nos da tiempo ya si eso lo quitamos
+	Agent* targetAgent;
+
 
 	float mass;
 	float speed;
@@ -42,6 +44,7 @@ public:
 	Vector2D getPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
+	Agent* getTargetAgent();
 	float getMass();
 	float getMaxVelocity();
 	float getMaxForce();
@@ -50,6 +53,7 @@ public:
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
+	void setTargetAgent(Agent *agent);
 	void update(float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);

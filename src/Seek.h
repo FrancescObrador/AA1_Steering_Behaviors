@@ -7,6 +7,6 @@ class Seek :
 public:
 	Seek();
 	~Seek();
-	void applySteeringForce(Agent *agent, float dtime);
-	static Vector2D calculateSeekForce(Vector2D targetPosition, Agent* agent);
+	virtual void applySteeringForce(Agent *agent, float dtime);
+	Vector2D calculateSeekForce(Vector2D targetPosition, Agent* agent);
 };
