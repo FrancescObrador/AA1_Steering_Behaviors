@@ -24,6 +24,7 @@ SceneSeek::~SceneSeek()
 
 void SceneSeek::update(float dtime, SDL_Event *event)
 {
+	
 	/* Keyboard & Mouse events */
 	switch (event->type) {
 	case SDL_MOUSEMOTION:

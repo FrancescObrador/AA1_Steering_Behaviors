@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+.vs/
+
+bin/
+
+SDL_Steering_Behaviors/
