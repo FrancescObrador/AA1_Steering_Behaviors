@@ -8,5 +8,5 @@ public:
 	Seek();
 	~Seek();
 	void applySteeringForce(Agent *agent, float dtime);
-	Vector2D calculateSeekForce(Vector2D targetPosition, Agent* agent);
+	static Vector2D calculateSeekForce(Vector2D targetPosition, Agent* agent);
 };
