@@ -2,21 +2,10 @@
 #include "Seek.h"
 using namespace std;
 
-SceneFlocking::SceneFlocking()
+SceneFlocking::SceneFlocking(int agentsNum)
 {
 	flockingAgents = new std::vector<Agent*>();
 	obstacles = new std::vector<Obstacle>();
-
-	//int countBoxes = 2;
-	//int paddingX = (1280 - 400) / (countBoxes*2);
-	//int paddingY = (768 - 400) / (countBoxes*2);
-	//for (int i = 0; i < countBoxes; ++i)
-	//{
-	//	for (int j = 0; j < countBoxes; ++j)
-	//	{//if(i%2 == 0)
-	//		obstacles->push_back(Obstacle(Vector2D((paddingX * i *2) + 200, (paddingY * j * 2) + 200), Vector2D(paddingX, paddingY)));
-	//	}
-	//}
 	
 	obstacles->push_back(Obstacle(Vector2D(200, 200), Vector2D(300, 75)));
 	obstacles->push_back(Obstacle(Vector2D(200, 450), Vector2D(300, 75)));
@@ -32,7 +21,7 @@ SceneFlocking::SceneFlocking()
 
 
 	Agent* agent;
-	for (int i = 0; i < 500; i++)
+	for (int i = 0; i < agentsNum; i++)
 	{
 		 agent = new Agent;
 		agent->setBehavior(new Flocking(flockingAgents, obstacles));

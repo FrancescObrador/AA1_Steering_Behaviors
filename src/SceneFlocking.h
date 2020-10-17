@@ -7,7 +7,7 @@ class SceneFlocking :
 	public Scene
 {
 public:
-	SceneFlocking();
+	SceneFlocking(int agentsNum);
 	~SceneFlocking();
 	void update(float dtime, SDL_Event* event);
 	void draw();
