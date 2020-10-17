@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <SDL.h>
+#include "Vector2D.h"
 
 /* Get the resource path for resources located in res/subDir */
 std::string getResourcePath(const std::string &subDir = "") {
@@ -91,5 +92,20 @@ void draw_circle(SDL_Renderer *surface, int n_cx, int n_cy, int rad, Uint8 r, Ui
 				error -= x;
 			}
 		}
+	}
+}
+
+void drawBox(SDL_Renderer* surface, Vector2D vertex, Vector2D size, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	for (int i = 0; i < size.x; i++)
+	{
+		set_pixel(surface, vertex.x + i, vertex.y, r, g, b, a);
+		set_pixel(surface, vertex.x + i, vertex.y + size.y, r, g, b, a);
+	}
+
+	for (int i = 0; i < size.y; i++)
+	{
+		set_pixel(surface, vertex.x, vertex.y + i, r, g, b, a);
+		set_pixel(surface, vertex.x + size.x, vertex.y + i, r, g, b, a);
 	}
 }

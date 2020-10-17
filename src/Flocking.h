@@ -6,6 +6,7 @@ class Flocking : public Pursue
 {
 private:
 	std::vector<Agent*>* flockingAgents;
+	std::vector<Obstacle>* obstacles;
 	float NEIGHBOR_RADIUS = 50;
 
 	float K_SEPARATION_FORCE = 400;
@@ -16,7 +17,7 @@ private:
 
 public:
 	Flocking();
-	Flocking(std::vector<Agent*>* flockingAgents);
+	Flocking(std::vector<Agent*>* flockingAgents, std::vector<Obstacle>* obstacles);
 	~Flocking();
 	virtual void applySteeringForce(Agent* agent, float dtime);
 	Vector2D calculateFlockingForce(Agent* agent);

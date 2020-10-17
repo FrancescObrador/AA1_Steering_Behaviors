@@ -4,8 +4,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "SDL_SimpleApp.h"
+#include <vector>
 #include "Vector2D.h"
 #include "utils.h"
+#include "Obstacle.h"
 
 
 class Agent
@@ -13,13 +15,12 @@ class Agent
 public:
 	class SteeringBehavior
 	{
-	private:
+	protected:
 		Vector2D winSize;
 		float K_PRIORITY_PERIMETER_AVOIDANCE = 100;
+		float avoidanceLookahead = 50;
 	public:
 		SteeringBehavior() {
-			/*SDL_SimpleApp simple;
-			winSize = simple.Instance()->getWinSize();*/
 			winSize = Vector2D(1280, 768);
 		};
 

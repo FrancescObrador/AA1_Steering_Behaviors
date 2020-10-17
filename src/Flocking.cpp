@@ -5,9 +5,10 @@ Flocking::Flocking()
 
 }
 
-Flocking::Flocking(std::vector<Agent*>* _flockingAgents)
+Flocking::Flocking(std::vector<Agent*>* _flockingAgents, std::vector<Obstacle>* _obstacles)
 {
 	flockingAgents = _flockingAgents;
+	obstacles = _obstacles;
 }
 
 Flocking::~Flocking()
@@ -18,7 +19,8 @@ void Flocking::applySteeringForce(Agent* agent, float dtime)
 {
 	Vector2D steeringForce = calculateFlockingForce(agent) + 
 		calculatePursueForce(agent->getTargetAgent()->getPosition(), agent->getTargetAgent()->getVelocity(), agent) + 
-		perimeterAvoidanceForce(agent);
+		perimeterAvoidanceForce(agent) +
+		(obstacleAvoidanceForce(agent, obstacles)* 100);
 
 	Vector2D acceleration = steeringForce / agent->getMass();
 	Vector2D velocity = agent->getVelocity() + acceleration * dtime;

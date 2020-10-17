@@ -5,12 +5,18 @@ using namespace std;
 SceneFlocking::SceneFlocking()
 {
 	flockingAgents = new std::vector<Agent*>();
+	obstacles = new std::vector<Obstacle>();
+
+	obstacles->push_back(Obstacle(Vector2D(50, 50), Vector2D(100, 50)));
+	obstacles->push_back(Obstacle(Vector2D(400, 50), Vector2D(10, 50)));
+	obstacles->push_back(Obstacle(Vector2D(500, 600), Vector2D(100, 100)));
+
 
 	Agent* agent;
 	for (int i = 0; i < 20; i++)
 	{
 		 agent = new Agent;
-		agent->setBehavior(new Flocking(flockingAgents));
+		agent->setBehavior(new Flocking(flockingAgents, obstacles));
 		agent->setTarget(Vector2D(100, 100));
 		agent->setPosition(Vector2D(100, 100 + i*10));
 		agent->loadSpriteTexture("../res/zombie1.png", 8);
@@ -69,6 +75,11 @@ void SceneFlocking::update(float dtime, SDL_Event* event)
 
 void SceneFlocking::draw()
 {
+	for each (Obstacle obs in *obstacles)
+	{
+		drawBox(TheApp::Instance()->getRenderer(), obs.vertices[0], obs.size, 255, 0, 0, 255);
+	}
+
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);
 	for (int i = 0; i < (int)agents.size(); i++)
 	{
