@@ -18,7 +18,7 @@ public:
 	protected:
 		Vector2D winSize;
 		float K_PRIORITY_PERIMETER_AVOIDANCE = 100;
-		float avoidanceLookahead = 50;
+		float avoidanceLookahead = 100;
 	public:
 		SteeringBehavior() {
 			winSize = Vector2D(1280, 768);
@@ -29,7 +29,7 @@ public:
 
 		Vector2D perimeterAvoidanceForce(Agent* agent){
 			
-			float perimeterBorder = 50; 
+			float perimeterBorder = 25; 
 			Vector2D desiredVelocity, steeringForce = Vector2D(0,0);
 
 			if (agent->getPosition().x < perimeterBorder)

@@ -20,7 +20,7 @@ void Flocking::applySteeringForce(Agent* agent, float dtime)
 	Vector2D steeringForce = calculateFlockingForce(agent) + 
 		calculatePursueForce(agent->getTargetAgent()->getPosition(), agent->getTargetAgent()->getVelocity(), agent) + 
 		perimeterAvoidanceForce(agent) +
-		(obstacleAvoidanceForce(agent, obstacles)* 100);
+		(obstacleAvoidanceForce(agent, obstacles) * K_OBSTACLE_AVOIDANCE_PRIORITY);
 
 	Vector2D acceleration = steeringForce / agent->getMass();
 	Vector2D velocity = agent->getVelocity() + acceleration * dtime;

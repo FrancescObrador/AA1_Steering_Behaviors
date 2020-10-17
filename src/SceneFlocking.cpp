@@ -7,13 +7,32 @@ SceneFlocking::SceneFlocking()
 	flockingAgents = new std::vector<Agent*>();
 	obstacles = new std::vector<Obstacle>();
 
-	obstacles->push_back(Obstacle(Vector2D(50, 50), Vector2D(100, 50)));
-	obstacles->push_back(Obstacle(Vector2D(400, 50), Vector2D(10, 50)));
-	obstacles->push_back(Obstacle(Vector2D(500, 600), Vector2D(100, 100)));
+	//int countBoxes = 2;
+	//int paddingX = (1280 - 400) / (countBoxes*2);
+	//int paddingY = (768 - 400) / (countBoxes*2);
+	//for (int i = 0; i < countBoxes; ++i)
+	//{
+	//	for (int j = 0; j < countBoxes; ++j)
+	//	{//if(i%2 == 0)
+	//		obstacles->push_back(Obstacle(Vector2D((paddingX * i *2) + 200, (paddingY * j * 2) + 200), Vector2D(paddingX, paddingY)));
+	//	}
+	//}
+	
+	obstacles->push_back(Obstacle(Vector2D(200, 200), Vector2D(300, 75)));
+	obstacles->push_back(Obstacle(Vector2D(200, 450), Vector2D(300, 75)));
+	
+	obstacles->push_back(Obstacle(Vector2D(600, 150), Vector2D(100, 450)));
+
+	obstacles->push_back(Obstacle(Vector2D(900, 325), Vector2D(150, 150)));
+	
+	obstacles->push_back(Obstacle(Vector2D(975, 125), Vector2D(50, 125)));
+	obstacles->push_back(Obstacle(Vector2D(975, 550), Vector2D(50, 125)));
+
+	
 
 
 	Agent* agent;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 500; i++)
 	{
 		 agent = new Agent;
 		agent->setBehavior(new Flocking(flockingAgents, obstacles));
@@ -26,7 +45,7 @@ SceneFlocking::SceneFlocking()
 	}
 
 	agent = new Agent();
-	agent->setBehavior(new Seek);
+	agent->setBehavior(new Seek(obstacles));
 	agent->setPosition(Vector2D(600, 50));
 	agent->setTarget(Vector2D(900, 650));
 	agent->loadSpriteTexture("../res/soldier.png", 4);
@@ -77,7 +96,7 @@ void SceneFlocking::draw()
 {
 	for each (Obstacle obs in *obstacles)
 	{
-		drawBox(TheApp::Instance()->getRenderer(), obs.vertices[0], obs.size, 255, 0, 0, 255);
+		drawBox(TheApp::Instance()->getRenderer(), obs.vertices[0], obs.size, 50, 235, 230, 255);
 	}
 
 	draw_circle(TheApp::Instance()->getRenderer(), (int)target.x, (int)target.y, 15, 255, 0, 0, 255);

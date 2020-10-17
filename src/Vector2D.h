@@ -221,9 +221,9 @@ namespace Vector2DUtils
 
 	// s1_start is line1 start, s1_end is line1 end, s2_start is line2 start, s2_end is line2 end
 	static bool SegmentSegmentIntersection(Vector2D s1_start, Vector2D s1_end, Vector2D s2_start, Vector2D s2_end, 
-		bool doIntersectOnPoints = true, Vector2D* intersectionPoint = nullptr)
+		Vector2D* intersectionPoint = nullptr, bool doIntersectOnPoints = true)
 	{
-		intersectionPoint = {};
+		//intersectionPoint = {};
 		Vector2D r = s1_end - s1_start;
 		Vector2D s = s2_end - s2_start;
 		float rCrossS = r.x * s.y - r.y * s.x;
@@ -268,7 +268,6 @@ namespace Vector2DUtils
 				return false;
 			}
 		}
-
 
 		if (intersectionPoint != nullptr)
 		{
