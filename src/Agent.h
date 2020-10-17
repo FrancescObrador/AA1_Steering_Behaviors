@@ -13,11 +13,45 @@ class Agent
 public:
 	class SteeringBehavior
 	{
+	private:
+		Vector2D winSize;
+		float K_PRIORITY_PERIMETER_AVOIDANCE = 100;
 	public:
-		SteeringBehavior() {};
+		SteeringBehavior() {
+			/*SDL_SimpleApp simple;
+			winSize = simple.Instance()->getWinSize();*/
+			winSize = Vector2D(1280, 768);
+		};
+
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
+
+		Vector2D perimeterAvoidanceForce(Agent* agent){
+			
+			float perimeterBorder = 50; 
+			Vector2D desiredVelocity, steeringForce = Vector2D(0,0);
+
+			if (agent->getPosition().x < perimeterBorder)
+				desiredVelocity.x = agent->getSpeed();
+			else if(agent->getPosition().x > winSize.x - perimeterBorder)
+				desiredVelocity.x = -agent->getSpeed();
+			
+			if (agent->getPosition().y < perimeterBorder)
+				desiredVelocity.y = agent->getSpeed();
+			else if(agent->getPosition().y > winSize.y - perimeterBorder)
+				desiredVelocity.y = -agent->getSpeed();
+			
+			if (desiredVelocity.Length() > 0.0f) {
+
+				steeringForce = desiredVelocity - agent->getVelocity();
+				steeringForce /= agent->getSpeed();
+				steeringForce *= agent->getMaxForce();
+			}
+
+			return steeringForce * this->K_PRIORITY_PERIMETER_AVOIDANCE;
+		}
 	};
+
 private:
 	SteeringBehavior *steering_behaviour;
 	Vector2D position;

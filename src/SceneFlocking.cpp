@@ -12,7 +12,7 @@ SceneFlocking::SceneFlocking()
 		 agent = new Agent;
 		agent->setBehavior(new Flocking(flockingAgents));
 		agent->setTarget(Vector2D(100, 100));
-		agent->setPosition(Vector2D(20, 20 + i));
+		agent->setPosition(Vector2D(100, 100 + i*10));
 		agent->loadSpriteTexture("../res/zombie1.png", 8);
 		agent->setSpeed(10);
 		agents.push_back(agent);

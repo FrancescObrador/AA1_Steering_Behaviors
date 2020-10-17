@@ -16,7 +16,10 @@ Flocking::~Flocking()
 
 void Flocking::applySteeringForce(Agent* agent, float dtime)
 {
-	Vector2D steeringForce = calculateFlockingForce(agent) + calculatePursueForce(agent->getTargetAgent()->getPosition(), agent->getTargetAgent()->getVelocity(), agent);
+	Vector2D steeringForce = calculateFlockingForce(agent) + 
+		calculatePursueForce(agent->getTargetAgent()->getPosition(), agent->getTargetAgent()->getVelocity(), agent) + 
+		perimeterAvoidanceForce(agent);
+
 	Vector2D acceleration = steeringForce / agent->getMass();
 	Vector2D velocity = agent->getVelocity() + acceleration * dtime;
 	velocity = Vector2D::Truncate(velocity, agent->getMaxVelocity());
