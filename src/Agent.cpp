@@ -86,6 +86,11 @@ void Agent::setVelocity(Vector2D _velocity)
 	velocity = _velocity;
 }
 
+void Agent::setSpeed(float _speed)
+{
+	speed = _speed;
+}
+
 void Agent::setTargetAgent(Agent* _agent)
 {
 	targetAgent = _agent;

@@ -4,8 +4,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "SDL_SimpleApp.h"
+#include <vector>
 #include "Vector2D.h"
 #include "utils.h"
+#include "Obstacle.h"
 
 
 class Agent
@@ -13,11 +15,44 @@ class Agent
 public:
 	class SteeringBehavior
 	{
+	protected:
+		Vector2D winSize;
+		float K_PRIORITY_PERIMETER_AVOIDANCE = 100;
+		float avoidanceLookahead = 100;
 	public:
-		SteeringBehavior() {};
+		SteeringBehavior() {
+			winSize = Vector2D(1280, 768);
+		};
+
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
+
+		Vector2D perimeterAvoidanceForce(Agent* agent){
+			
+			float perimeterBorder = 25; 
+			Vector2D desiredVelocity, steeringForce = Vector2D(0,0);
+
+			if (agent->getPosition().x < perimeterBorder)
+				desiredVelocity.x = agent->getSpeed();
+			else if(agent->getPosition().x > winSize.x - perimeterBorder)
+				desiredVelocity.x = -agent->getSpeed();
+			
+			if (agent->getPosition().y < perimeterBorder)
+				desiredVelocity.y = agent->getSpeed();
+			else if(agent->getPosition().y > winSize.y - perimeterBorder)
+				desiredVelocity.y = -agent->getSpeed();
+			
+			if (desiredVelocity.Length() > 0.0f) {
+
+				steeringForce = desiredVelocity - agent->getVelocity();
+				steeringForce /= agent->getSpeed();
+				steeringForce *= agent->getMaxForce();
+			}
+
+			return steeringForce * this->K_PRIORITY_PERIMETER_AVOIDANCE;
+		}
 	};
+
 private:
 	SteeringBehavior *steering_behaviour;
 	Vector2D position;
@@ -53,6 +88,7 @@ public:
 	void setPosition(Vector2D position);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
+	void setSpeed(float speed);
 	void setTargetAgent(Agent *agent);
 	void update(float dtime, SDL_Event *event);
 	void draw();
