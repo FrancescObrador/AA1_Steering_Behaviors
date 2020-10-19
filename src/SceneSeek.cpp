@@ -6,7 +6,7 @@ using namespace std;
 SceneSeek::SceneSeek()
 {
 	Agent *agent = new Agent;
-	agent->setBehavior(new Seek);
+	agent->setBehavior(new Seek(1));
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
 	agent->loadSpriteTexture("../res/soldier.png", 4);

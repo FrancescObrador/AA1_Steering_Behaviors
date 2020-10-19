@@ -1,6 +1,6 @@
 #include "Pursue.h"
 
-Pursue::Pursue()
+Pursue::Pursue(float _priorityWeight) : SteeringBehavior(_priorityWeight)
 {
 }
 
@@ -10,7 +10,7 @@ Pursue::~Pursue()
 
 void Pursue::applySteeringForce(Agent* agent, float dtime)	//TODO: solve this
 {
-	Vector2D steeringForce = calculatePursueForce(agent->getTargetAgent()->getPosition(), agent->getTargetAgent()->getVelocity(), agent);
+	Vector2D steeringForce = calculateSteeringForce(agent);
 
 	Vector2D acceleration = steeringForce / agent->getMass();
 	Vector2D velocity = agent->getVelocity() + acceleration * dtime;
@@ -19,18 +19,22 @@ void Pursue::applySteeringForce(Agent* agent, float dtime)	//TODO: solve this
 	agent->setPosition(agent->getPosition() + velocity * dtime);
 }
 
-Vector2D Pursue::calculatePursueForce(Vector2D targetPosition, Vector2D targetVelocity, Agent* agent)
+Vector2D Pursue::calculateSteeringForce(Agent *agent)
 {
-	float velocity = agent->getVelocity().Length(); 
-
+	float velocity = agent->getVelocity().Length();
+	Seek* auxSeek = new Seek(priorityWeight);
 	if (velocity != 0)
 	{
-		float t = Vector2D::Distance(agent->getPosition(), targetPosition) / velocity;
-		Vector2D predictedTarget = targetPosition + (targetVelocity * t);
-		return Seek().calculateSeekForce(predictedTarget, agent);
+		float t = Vector2D::Distance(agent->getPosition(), agent->getTargetAgent()->getPosition()) / velocity;
+		Vector2D predictedTarget = agent->getTargetAgent()->getPosition() + (agent->getTargetAgent()->getVelocity() * t);
+		
+		Agent* fakeTarget = new Agent(*agent);
+		fakeTarget->setTarget(predictedTarget);
+
+		return auxSeek->calculateSteeringForce(fakeTarget); //.calculateSeekForce(predictedTarget, agent);
 	}
-	else 
+	else
 	{
-		return Seek().calculateSeekForce(targetPosition, agent);
+		return auxSeek->calculateSteeringForce(agent);
 	}
 }

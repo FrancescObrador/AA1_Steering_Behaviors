@@ -1,14 +1,8 @@
 #include "Flocking.h"
 
-Flocking::Flocking()
-{
-
-}
-
-Flocking::Flocking(std::vector<Agent*>* _flockingAgents, std::vector<Obstacle>* _obstacles)
+Flocking::Flocking(std::vector<Agent*>* _flockingAgents, float _priorityWeight) : SteeringBehavior(_priorityWeight)
 {
 	flockingAgents = _flockingAgents;
-	obstacles = _obstacles;
 }
 
 Flocking::~Flocking()
@@ -17,10 +11,10 @@ Flocking::~Flocking()
 
 void Flocking::applySteeringForce(Agent* agent, float dtime)
 {
-	Vector2D steeringForce = calculateFlockingForce(agent) + 
-		calculatePursueForce(agent->getTargetAgent()->getPosition(), agent->getTargetAgent()->getVelocity(), agent) + 
-		perimeterAvoidanceForce(agent) +
-		(obstacleAvoidanceForce(agent, obstacles) * K_OBSTACLE_AVOIDANCE_PRIORITY);
+	Vector2D steeringForce = calculateSteeringForce(agent); //+
+		//calculatePursueForce(agent->getTargetAgent()->getPosition(), agent->getTargetAgent()->getVelocity(), agent) //+ 
+		//perimeterAvoidanceForce(agent) +
+		//(obstacleAvoidanceForce(agent, obstacles) * K_OBSTACLE_AVOIDANCE_PRIORITY);
 
 	Vector2D acceleration = steeringForce / agent->getMass();
 	Vector2D velocity = agent->getVelocity() + acceleration * dtime;
@@ -30,9 +24,9 @@ void Flocking::applySteeringForce(Agent* agent, float dtime)
 	agent->setPosition(agent->getPosition() + velocity * dtime);
 }
 
-Vector2D Flocking::calculateFlockingForce(Agent* agent)
+Vector2D Flocking::calculateSteeringForce(Agent* agent)
 {
-	Vector2D separationVector = Vector2D(0,0);
+	Vector2D separationVector = Vector2D(0, 0);
 	Vector2D averagePosition = Vector2D(0, 0);
 	Vector2D averageVelocity = Vector2D(0, 0);
 
@@ -65,8 +59,7 @@ Vector2D Flocking::calculateFlockingForce(Agent* agent)
 	Vector2D cohesionDirection = Vector2D::Normalize(averagePosition);
 	Vector2D alignmentDirection = Vector2D::Normalize(averageVelocity);
 
-	return	separationDirection * K_SEPARATION_FORCE + 
-			cohesionDirection * K_COHESION_FORCE + 
-			alignmentDirection * K_ALIGNMENT_FORCE;
-
+	return	separationDirection * K_SEPARATION_FORCE +
+		cohesionDirection * K_COHESION_FORCE +
+		alignmentDirection * K_ALIGNMENT_FORCE;
 }

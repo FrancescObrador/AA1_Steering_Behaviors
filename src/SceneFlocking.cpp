@@ -1,5 +1,10 @@
 #include "SceneFlocking.h"
 #include "Seek.h"
+#include "ObstacleAvoidance.h"
+#include "Pursue.h"
+#include "Composite.h"
+#include "PerimeterAvoidance.h"
+
 using namespace std;
 
 SceneFlocking::SceneFlocking(int agentsNum)
@@ -17,14 +22,18 @@ SceneFlocking::SceneFlocking(int agentsNum)
 	obstacles->push_back(Obstacle(Vector2D(975, 125), Vector2D(50, 125)));
 	obstacles->push_back(Obstacle(Vector2D(975, 550), Vector2D(50, 125)));
 
-	
+	std::vector<Agent::SteeringBehavior*>* sBEnemyList = new std::vector<Agent::SteeringBehavior*>();
+	sBEnemyList->push_back(new Flocking(flockingAgents, 2));
+	sBEnemyList->push_back(new Pursue(10));
+	sBEnemyList->push_back(new ObstacleAvoidance(obstacles, 125));
+	sBEnemyList->push_back(new PerimeterAvoidance(150));
 
 
 	Agent* agent;
 	for (int i = 0; i < agentsNum; i++)
 	{
-		 agent = new Agent;
-		agent->setBehavior(new Flocking(flockingAgents, obstacles));
+		agent = new Agent;
+		agent->setBehavior(new Composite(sBEnemyList, 1));
 		agent->setTarget(Vector2D(100, 100));
 		agent->setPosition(Vector2D(100, 100 + i*10));
 		agent->loadSpriteTexture("../res/zombie1.png", 8);
@@ -34,8 +43,14 @@ SceneFlocking::SceneFlocking(int agentsNum)
 	}
 
 	agent = new Agent();
-	agent->setBehavior(new Seek(obstacles));
-	agent->setPosition(Vector2D(600, 50));
+
+	std::vector<Agent::SteeringBehavior*>* sBList = new std::vector<Agent::SteeringBehavior*>();
+	sBList->push_back(new Seek(1));
+	sBList->push_back(new ObstacleAvoidance(obstacles, 100));
+
+	agent->setBehavior(new Composite(sBList, 1));
+	agent->setSpeed(0.25f);
+	agent->setPosition(Vector2D(550, 150));
 	agent->setTarget(Vector2D(900, 650));
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	

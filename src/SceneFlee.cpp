@@ -6,7 +6,7 @@ using namespace std;
 SceneFlee::SceneFlee()
 {
 	Agent *agent = new Agent;
-	agent->setBehavior(new Flee);
+	agent->setBehavior(new Flee(1));
 	agent->setPosition(Vector2D(640,360));
 	agent->setTarget(Vector2D(640, 360));
 	agent->loadSpriteTexture("../res/soldier.png", 4);

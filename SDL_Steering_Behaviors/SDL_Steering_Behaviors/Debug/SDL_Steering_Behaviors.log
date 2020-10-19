@@ -1,1 +1,3 @@
-﻿  SDL_Steering_Behaviors.vcxproj -> C:\Users\kikel\Desktop\AA1_Steering_Behaviors\\bin\SDL_Steering_Behaviors.exe
+﻿  SceneFlocking.cpp
+c:\users\expov\documents\tercero\ia\aa1\src\sceneflocking.cpp(38): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  SDL_Steering_Behaviors.vcxproj -> C:\Users\expov\Documents\Tercero\IA\AA1\\bin\SDL_Steering_Behaviors.exe

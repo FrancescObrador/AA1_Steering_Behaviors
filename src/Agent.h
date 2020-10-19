@@ -17,40 +17,20 @@ public:
 	{
 	protected:
 		Vector2D winSize;
-		float K_PRIORITY_PERIMETER_AVOIDANCE = 100;
 		float avoidanceLookahead = 100;
+		float priorityWeight = 1;
 	public:
-		SteeringBehavior() {
+		SteeringBehavior(float _priorityWeight) {
 			winSize = Vector2D(1280, 768);
+			priorityWeight = _priorityWeight;
 		};
 
 		virtual ~SteeringBehavior() {};
 		virtual void applySteeringForce(Agent *agent, float dtime) {};
-
-		Vector2D perimeterAvoidanceForce(Agent* agent){
-			
-			float perimeterBorder = 25; 
-			Vector2D desiredVelocity, steeringForce = Vector2D(0,0);
-
-			if (agent->getPosition().x < perimeterBorder)
-				desiredVelocity.x = agent->getSpeed();
-			else if(agent->getPosition().x > winSize.x - perimeterBorder)
-				desiredVelocity.x = -agent->getSpeed();
-			
-			if (agent->getPosition().y < perimeterBorder)
-				desiredVelocity.y = agent->getSpeed();
-			else if(agent->getPosition().y > winSize.y - perimeterBorder)
-				desiredVelocity.y = -agent->getSpeed();
-			
-			if (desiredVelocity.Length() > 0.0f) {
-
-				steeringForce = desiredVelocity - agent->getVelocity();
-				steeringForce /= agent->getSpeed();
-				steeringForce *= agent->getMaxForce();
-			}
-
-			return steeringForce * this->K_PRIORITY_PERIMETER_AVOIDANCE;
-		}
+		virtual Vector2D calculateSteeringForce(Agent *agent) 
+		{ 
+			return Vector2D(0, 0); 
+		};
 	};
 
 private:
