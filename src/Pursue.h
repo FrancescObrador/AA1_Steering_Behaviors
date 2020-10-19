@@ -1,11 +1,12 @@
 #pragma once
+#include "Agent.h"
 #include "Seek.h"
 
-class Pursue : public Seek
+class Pursue : public Agent::SteeringBehavior
 {
 public:
-	Pursue();
+	Pursue(float _priorityWeight);
 	~Pursue();
 	void applySteeringForce(Agent* agent, float dtime);
-	Vector2D calculatePursueForce(Vector2D targetPosition, Vector2D targetVelocity, Agent* agent);
+	Vector2D calculateSteeringForce(Agent *agent);
 };

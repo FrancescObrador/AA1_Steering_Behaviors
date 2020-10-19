@@ -7,13 +7,13 @@ using namespace std;
 SceneSeekFlee::SceneSeekFlee()
 {
 	Agent *agent = new Agent;
-	agent->setBehavior(new Seek);
+	agent->setBehavior(new Seek(1));
 	agent->setTarget(Vector2D(100, 100));
 	agent->loadSpriteTexture("../res/zombie1.png", 8);
 	agents.push_back(agent);
 
 	agent = new Agent();
-	agent->setBehavior(new Seek);
+	agent->setBehavior(new Seek(1));
 	agent->setPosition(Vector2D(600,50));
 	agent->setTarget(Vector2D(900, 650));
 	agent->loadSpriteTexture("../res/soldier.png", 4);
