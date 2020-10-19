@@ -1,0 +1,4 @@
+Este programa dispone de 3 simulaciones: 
+Pulsando el número 1 aparece 1 agente
+Pulsando el número 2 aparecen 10 agentes 
+Pulsando el número 3 aparecen 50 agentes 
